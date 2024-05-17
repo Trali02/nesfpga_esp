@@ -31,7 +31,7 @@ ARCHITECTURE behavior OF PPU_tb IS
         VBlank_n : out std_logic; -- Tied to the CPU's Non-Maskable Interrupt (NMI)     
         
         -- Framebuffer output
-        FB_Address : out std_logic_vector(15 downto 0); -- linear index in 256x240 pixel framebuffer
+        FB_Address : out unsigned(15 downto 0); -- linear index in 256x240 pixel framebuffer
         FB_Color : out std_logic_vector(5 downto 0); -- Palette index of current color
         FB_DE : out std_logic    -- True when PPU is writing to the framebuffer
     );
@@ -64,7 +64,7 @@ ARCHITECTURE behavior OF PPU_tb IS
    signal Data_out : std_logic_vector(7 downto 0);
    signal CHR_Address : unsigned(13 downto 0);
    signal VBlank_n : std_logic;
-   signal FB_Address : std_logic_vector(15 downto 0);
+   signal FB_Address : unsigned(15 downto 0);
    signal FB_Color : std_logic_vector(5 downto 0);
    signal FB_DE : std_logic;
    
