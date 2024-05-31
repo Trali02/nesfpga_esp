@@ -16,8 +16,8 @@ ARCHITECTURE behavior OF SpriteSelector_TB IS
      CLK : IN  std_logic;
      CE : IN  std_logic;
      RSTN : IN  std_logic;
-     HPOS : IN  integer range 0 to 340;
-     VPOS : IN  integer range 0 to 261;
+     HPOS : IN  integer;
+     VPOS : IN  integer;
      PatternTableAddressOffset : IN  std_logic;
      SpriteColor : OUT  unsigned(3 downto 0);
      SpriteForegroundPriority : OUT  std_logic;
@@ -61,8 +61,8 @@ ARCHITECTURE behavior OF SpriteSelector_TB IS
   signal CE : std_logic := '0';
   signal RSTN : std_logic := '0';
   
-  signal HPOS : integer range 0 to 340; -- negative values mark the HBlank period
-  signal VPOS : integer range 0 to 261; -- 240 to 261 is the VBlank period
+  signal HPOS : integer; -- negative values mark the HBlank period
+  signal VPOS : integer; -- 240 to 261 is the VBlank period
   
   signal CE_cnt : integer := 0;
  

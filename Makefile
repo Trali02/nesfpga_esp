@@ -13,9 +13,9 @@ WORKDIR = work
 STOP_TIME = 10us
 GHDL_SIM_OPT = --stop-time=$(STOP_TIME) --stop-delta=100000
 
-.PHONY: clean
+.PHONY: all
 
-all: clean compile run
+all: clean compile
 
 compile: 
 	@mkdir -p $(WORKDIR)

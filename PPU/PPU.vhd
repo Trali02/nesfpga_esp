@@ -35,8 +35,8 @@ end NES_2C02;
 architecture arch of NES_2C02 is
 
   -- Internal H/V Counters
-  signal HPOS : integer range 0 to 340 := 0;
-  signal VPOS : integer range 0 to 261 := 0;
+  signal HPOS : integer := 0;
+  signal VPOS : integer := 0;
 
   -- Nes Clock / 4 Clock divider
   signal CE_cnt : unsigned(1 downto 0) := "00";

@@ -9,8 +9,8 @@ entity SpriteSelector is
     CE : in std_logic;
     RSTN : in std_logic;
         
-    HPOS : in integer range 0 to 340;
-    VPOS : in integer range 0 to 261;
+    HPOS : in integer;
+    VPOS : in integer;
     
 		PatternTableAddressOffset : in std_logic;
     
