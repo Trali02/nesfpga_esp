@@ -5,3 +5,5 @@ TestBenches/audio.dump
 TestBenches/fbdump_top.out
 TestBenches/file_io.out
 TestBenches/spritetb.out
+*.gtkw
+*.dat

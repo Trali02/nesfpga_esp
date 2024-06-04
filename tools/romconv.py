@@ -3,7 +3,7 @@
 import sys
 
 filename = sys.argv[1]
-basename = filename.split(".")[0]
+basename = filename.split(".nes")[0]
 
 f = file(filename)
 header = f.read(4)

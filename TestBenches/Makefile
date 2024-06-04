@@ -1,15 +1,17 @@
 # vhdl files
 TESTBENCH = NES_Framebuffer_TB
 FILES = $(wildcard ../**/*vhd) $(wildcard ../*.vhd)
-FILES_EXCLUDE = $(wildcard ../CartridgeROM*.vhd) $(wildcard ../TestBenches/*)
+FILES_EXCLUDE = ../CartridgeROM_Coregen.vhd#$(wildcard ../CartridgeROM*.vhd) $(wildcard ../TestBenches/*)
 FILES_FINAL = $(filter-out $(wildcard $(FILES_EXCLUDE)),$(wildcard $(FILES)))
 VHDLEX = .vhd
 
 VIEW = $(TESTBENCH)
 
 # testbench
-TESTBENCHFILES = $(wildcard *.vhd)
+# TESTBENCHFILES = $(wildcard *.vhd)
 
+#roms
+ROM = ../roms/smb
 
 #GHDL CONFIG
 GHDL_CMD = ghdl
@@ -25,7 +27,7 @@ WAVEFORM_VIEWER = gtkwave
 
 .PHONY: clean
 
-all: clean compile run
+all: clean rom compile run
 
 
 compile:
@@ -35,10 +37,15 @@ compile:
 
 
 run:
-	@$(GHDL_CMD) -r $(GHDL_FLAGS) --workdir=$(SIMDIR) --work=work $(TESTBENCH) --wave=$(patsubst %,$(SIMDIR)/%.ghw, $(TESTBENCH))  $(GHDL_SIM_OPT)
+	@$(GHDL_CMD) -r --time-resolution=auto $(GHDL_FLAGS) --workdir=$(SIMDIR) --work=work $(TESTBENCH) --wave=$(patsubst %,$(SIMDIR)/%.ghw, $(TESTBENCH)) $(GHDL_SIM_OPT) --ieee-asserts=disable
 
 view:
 	$(WAVEFORM_VIEWER) --dump=$(SIMDIR)/$(VIEW).ghw --save ./$(VIEW).gtkw
 
 clean:
 	@rm -rf $(SIMDIR)
+	@-rm $(ROM)_chr.dat
+	@-rm $(ROM)_prg.dat
+
+rom:
+	@python2 ../tools/romconv.py $(ROM).nes
