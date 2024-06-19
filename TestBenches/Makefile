@@ -1,11 +1,13 @@
 # vhdl files
 TESTBENCH = NES_Framebuffer_TB
 FILES = $(wildcard ../**/*vhd) $(wildcard ../*.vhd)
-FILES_EXCLUDE = ../CartridgeROM_Coregen.vhd#$(wildcard ../CartridgeROM*.vhd) $(wildcard ../TestBenches/*)
+FILES_EXCLUDE = ../CartridgeROM_Coregen.vhd #$(wildcard ../CartridgeROM*.vhd)# $(wildcard ../TestBenches/*)
 FILES_FINAL = $(filter-out $(wildcard $(FILES_EXCLUDE)),$(wildcard $(FILES)))
 VHDLEX = .vhd
 
 VIEW = $(TESTBENCH)
+
+YOSYS = yosys
 
 # testbench
 # TESTBENCHFILES = $(wildcard *.vhd)
@@ -35,6 +37,8 @@ compile:
 	@$(GHDL_CMD) -i $(GHDL_FLAGS) --workdir=$(SIMDIR) --work=work $(TESTBENCHFILES) $(FILES_FINAL)
 	@$(GHDL_CMD) -m $(GHDL_FLAGS) --workdir=$(SIMDIR) --work=work $(TESTBENCH)
 
+synth_vhdl: $(FILES_FINAL)
+	$(YOSYS) -mghdl -p 'ghdl --warn-no-binding -C --ieee=synopsys $^ -e $(TESTBENCH); synth_gatemate -top $(TESTBENCH) -nomx8 -vlog net/$(TESTBENCH)_synth.v'
 
 run:
 	@$(GHDL_CMD) -r --time-resolution=auto $(GHDL_FLAGS) --workdir=$(SIMDIR) --work=work $(TESTBENCH) --wave=$(patsubst %,$(SIMDIR)/%.ghw, $(TESTBENCH)) $(GHDL_SIM_OPT) --ieee-asserts=disable
