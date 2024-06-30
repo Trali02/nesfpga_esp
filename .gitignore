@@ -7,3 +7,4 @@ TestBenches/file_io.out
 TestBenches/spritetb.out
 *.gtkw
 *.dat
+/tools/image.png
